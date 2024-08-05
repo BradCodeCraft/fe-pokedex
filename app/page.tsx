@@ -10,11 +10,14 @@ import Pokedex from "./assets/icons/Pokedex-logo.svg";
 // Components
 import CardNavigation from "./components/CardNavigation";
 import Card from "./components/Card";
+import Filter from "./components/Filter";
+import FilterTable from "./components/FilterTable";
 
 export default function MainPage() {
   const [pokemons, setPokemons] = useState<Pokemons[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState<number>(1);
+  const [visibility, setVisibility] = useState<Boolean>(false);
 
   useEffect(() => {
     fetchTotalPages(setTotalNumberOfPages);
@@ -29,10 +32,14 @@ export default function MainPage() {
         <div className="min-w-full h-40 my-5">
           <SearchBar />
 
-          <div className="mt-5">
-            {/* Sort */}
-            <Sort />
-            {/* Filters */}
+          <div className="mt-5 flex flex-col">
+            <div className="w-full flex justify-between">
+              {/* Sort */}
+              <Sort />
+              {/* Filters */}
+              <Filter visibility={visibility} setVisibility={setVisibility} />
+            </div>
+            <FilterTable visibility={visibility} />
           </div>
         </div>
 

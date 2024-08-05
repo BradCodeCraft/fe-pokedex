@@ -20,8 +20,6 @@ export default function Card({ url }: { url: string }) {
       : null;
   }, [url, pokemon?.species.url]);
 
-  console.log(pokemon?.types);
-
   return (
     <Suspense>
       <div
