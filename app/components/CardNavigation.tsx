@@ -12,7 +12,7 @@ export default function CardNavigation({
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
-    <nav className="flex justify-center">
+    <nav className="flex justify-center mt-5">
       <button
         className=""
         onClick={() => (page === 1 ? setPage(page) : setPage(page - 1))}

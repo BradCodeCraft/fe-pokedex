@@ -13,7 +13,7 @@ export async function fetchTotalPages(
     }
 
     const data = await response.json();
-    setTotalPages(Math.floor(data.count / 20));
+    setTotalPages(Math.ceil(data.count / 20));
     return Math.floor(data.count / 20);
   } catch (error) {
     return `Error caught: ${error}`;

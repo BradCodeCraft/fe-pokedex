@@ -26,7 +26,7 @@ export default function MainPage() {
       <div className="p-7">
         <Image src={Pokedex} alt="Pokemon Logo" />
         {/* Search + Sort + Filters */}
-        <div className="min-w-full h-40 mt-5">
+        <div className="min-w-full h-40 my-5">
           <SearchBar />
 
           <div className="mt-5">
@@ -41,9 +41,9 @@ export default function MainPage() {
           <div className="grid grid-cols-4 gap-20">
             {pokemons.map((pokemon) => {
               return pokemons.indexOf(pokemon) + 1 <=
-                Math.floor(pokemons.length / totalNumberOfPages) * page &&
+                Math.ceil(pokemons.length / totalNumberOfPages) * page &&
                 pokemons.indexOf(pokemon) + 1 >
-                  Math.floor(pokemons.length / totalNumberOfPages) *
+                  Math.ceil(pokemons.length / totalNumberOfPages) *
                     (page - 1) ? (
                 <div key={pokemons.indexOf(pokemon) + 1}>
                   <Card url={pokemon.url} />
