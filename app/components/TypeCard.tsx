@@ -6,7 +6,7 @@ import {
 } from "../utils/data";
 import Image from "next/image";
 
-export default function TypeCard({ key, type }: { key: number; type: Types }) {
+export default function TypeCard({ type }: { type: Types }) {
   return (
     <div
       className={`${transformPokemonBackground(
@@ -18,6 +18,7 @@ export default function TypeCard({ key, type }: { key: number; type: Types }) {
         src={generateTypeLogo(type.type.name)}
         alt="Type SVG"
         className="mr-1"
+        width={20}
       />
       {/* type name */}
       <h1>{transformName(type.type.name)}</h1>

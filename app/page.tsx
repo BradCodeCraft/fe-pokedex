@@ -18,6 +18,7 @@ export default function MainPage() {
   const [page, setPage] = useState<number>(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState<number>(1);
   const [visibility, setVisibility] = useState<Boolean>(false);
+  const [sortOption, setSortOption] = useState<string>("num-asc");
 
   useEffect(() => {
     fetchTotalPages(setTotalNumberOfPages);
@@ -35,7 +36,12 @@ export default function MainPage() {
           <div className="mt-5 flex flex-col">
             <div className="w-full flex justify-between">
               {/* Sort */}
-              <Sort />
+              <Sort
+                pokemons={pokemons}
+                sortOption={sortOption}
+                setPokemons={setPokemons}
+                setSortOption={setSortOption}
+              />
               {/* Filters */}
               <Filter visibility={visibility} setVisibility={setVisibility} />
             </div>

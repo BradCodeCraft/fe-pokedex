@@ -5,7 +5,7 @@ export async function fetchTotalPages(
 ) {
   try {
     const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=$10000&offset=0`
+      `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`
     );
 
     if (!response.ok) {
@@ -13,8 +13,8 @@ export async function fetchTotalPages(
     }
 
     const data = await response.json();
-    setTotalPages(Math.ceil(data.count / 20));
-    return Math.floor(data.count / 20);
+    setTotalPages(Math.ceil(data.results.length / 20));
+    return Math.ceil(data.results.length / 20);
   } catch (error) {
     return `Error caught: ${error}`;
   }
@@ -26,7 +26,7 @@ export async function fetchData(
 ) {
   try {
     const response = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`
+      `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`
     );
 
     if (!response.ok) {
@@ -168,7 +168,6 @@ export function transformPokemonBackground(type: string | undefined) {
   return result;
 }
 
-// Import Type SVGs
 import normal from "../assets/icons/normal.svg";
 import fire from "../assets/icons/fire.svg";
 import water from "../assets/icons/water.svg";
@@ -187,7 +186,6 @@ import dragon from "../assets/icons/dragon.svg";
 import dark from "../assets/icons/dark.svg";
 import steel from "../assets/icons/steel.svg";
 import fairy from "../assets/icons/fairy.svg";
-
 export function generateTypeLogo(type: string | undefined) {
   switch (type) {
     case "normal":
@@ -229,4 +227,49 @@ export function generateTypeLogo(type: string | undefined) {
   }
 
   return "";
+}
+
+export function handleSort(
+  sortOption: string,
+  setSortOption: React.Dispatch<React.SetStateAction<string>>,
+  pokemons: Pokemons[],
+  setPokemons: React.Dispatch<React.SetStateAction<Pokemons[]>>
+) {
+  let tempArray = pokemons;
+  setSortOption(sortOption);
+  if (sortOption == "num-asc") {
+    const commonString = "https://pokeapi.co/api/v2/pokemon/";
+    tempArray = tempArray.sort((a, b) => {
+      return parseInt(a.url.substring(commonString.length, a.url.length - 1)) <
+        parseInt(b.url.substring(commonString.length, b.url.length - 1))
+        ? -1
+        : parseInt(a.url.substring(commonString.length, a.url.length - 1)) >
+          parseInt(b.url.substring(commonString.length, b.url.length - 1))
+        ? 1
+        : 0;
+    });
+    setPokemons(tempArray);
+  } else if (sortOption == "num-desc") {
+    const commonString = "https://pokeapi.co/api/v2/pokemon/";
+    tempArray = tempArray.sort((a, b) => {
+      return parseInt(a.url.substring(commonString.length, a.url.length - 1)) <
+        parseInt(b.url.substring(commonString.length, b.url.length - 1))
+        ? 1
+        : parseInt(a.url.substring(commonString.length, a.url.length - 1)) >
+          parseInt(b.url.substring(commonString.length, b.url.length - 1))
+        ? -1
+        : 0;
+    });
+    setPokemons(tempArray);
+  } else if (sortOption == "alp-asc") {
+    tempArray = tempArray.sort((a, b) => {
+      return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+    });
+    setPokemons(tempArray);
+  } else {
+    tempArray = tempArray.sort((a, b) => {
+      return a.name < b.name ? 1 : a.name > b.name ? -1 : 0;
+    });
+    setPokemons(tempArray);
+  }
 }
