@@ -3,7 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import Sort from "./components/Sort";
-import { fetchData, fetchTotalPages } from "./utils/data";
+import { fetchData, fetchTotalPages, handleSort } from "./utils/data";
 import Image from "next/image";
 // SVGs
 import Pokedex from "./assets/icons/Pokedex-logo.svg";
@@ -18,12 +18,12 @@ export default function MainPage() {
   const [page, setPage] = useState<number>(1);
   const [totalNumberOfPages, setTotalNumberOfPages] = useState<number>(1);
   const [visibility, setVisibility] = useState<Boolean>(false);
-  const [sortOption, setSortOption] = useState<string>("num-asc");
+  const [sortOption, setSortOption] = useState<string>("");
 
   useEffect(() => {
     fetchTotalPages(setTotalNumberOfPages);
-    fetchData(page, setPokemons);
-  }, [page]);
+    fetchData(setPokemons);
+  }, []);
 
   return (
     <Suspense>

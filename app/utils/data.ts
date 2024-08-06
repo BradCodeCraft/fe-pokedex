@@ -21,7 +21,6 @@ export async function fetchTotalPages(
 }
 
 export async function fetchData(
-  page: number,
   setData: React.Dispatch<React.SetStateAction<Pokemons[]>>
 ) {
   try {
@@ -91,9 +90,12 @@ export function transformPokemonSprites(sprites: Sprites | undefined) {
     const source: string | StaticImport =
       sprites.other.dream_world.front_default != null ||
       sprites.other.dream_world.front_female != null
-        ? "" + sprites.other.dream_world.front_default
-        : "" + sprites.other.dream_world.front_female;
-
+        ? sprites.other.dream_world.front_default != null
+          ? "" + sprites.other.dream_world.front_default
+          : "" + sprites.other.dream_world.front_female
+        : sprites.front_default != null
+        ? "" + sprites.front_default
+        : "" + sprites.front_female;
     return source ? source : "";
   }
 }
@@ -235,9 +237,9 @@ export function handleSort(
   pokemons: Pokemons[],
   setPokemons: React.Dispatch<React.SetStateAction<Pokemons[]>>
 ) {
-  let tempArray = pokemons;
-  setSortOption(sortOption);
+  let tempArray: Pokemons[] = pokemons;
   if (sortOption == "num-asc") {
+    setSortOption("num-asc");
     const commonString = "https://pokeapi.co/api/v2/pokemon/";
     tempArray = tempArray.sort((a, b) => {
       return parseInt(a.url.substring(commonString.length, a.url.length - 1)) <
@@ -250,6 +252,7 @@ export function handleSort(
     });
     setPokemons(tempArray);
   } else if (sortOption == "num-desc") {
+    setSortOption("num-desc");
     const commonString = "https://pokeapi.co/api/v2/pokemon/";
     tempArray = tempArray.sort((a, b) => {
       return parseInt(a.url.substring(commonString.length, a.url.length - 1)) <
@@ -262,14 +265,18 @@ export function handleSort(
     });
     setPokemons(tempArray);
   } else if (sortOption == "alp-asc") {
+    setSortOption("alp-asc");
     tempArray = tempArray.sort((a, b) => {
       return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
     });
     setPokemons(tempArray);
   } else {
+    setSortOption("alp-desc");
     tempArray = tempArray.sort((a, b) => {
       return a.name < b.name ? 1 : a.name > b.name ? -1 : 0;
     });
     setPokemons(tempArray);
   }
 }
+
+export function handleSearch(s: string) {}
