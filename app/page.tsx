@@ -11,7 +11,6 @@ import Pokedex from "./assets/icons/Pokedex-logo.svg";
 import CardNavigation from "./components/CardNavigation";
 import Card from "./components/Card";
 import Filter from "./components/Filter";
-import FilterTable from "./components/FilterTable";
 
 export default function MainPage() {
   const [pokemons, setPokemons] = useState<Pokemons[]>([]);
@@ -47,7 +46,6 @@ export default function MainPage() {
               {/* Filters */}
               <Filter visibility={visibility} setVisibility={setVisibility} />
             </div>
-            <FilterTable visibility={visibility} />
           </div>
         </div>
 
