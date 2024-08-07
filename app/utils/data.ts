@@ -279,4 +279,38 @@ export function handleSort(
   }
 }
 
-export function handleSearch(s: string) {}
+export async function handleSearch(
+  searchString: string,
+  setTotalNumberOfPages: React.Dispatch<React.SetStateAction<number>>,
+  setPokemons: React.Dispatch<React.SetStateAction<Pokemons[]>>
+) {
+  let temporaryArray: Pokemons[] = [];
+  try {
+    const response = await fetch(
+      `https://pokeapi.co/api/v2/pokemon?offset=0&limit=1000`
+    );
+
+    if (!response.ok) {
+      return "Failed To Fetch Pokemons";
+    }
+    const data = await response.json();
+    temporaryArray = data.results;
+  } catch (error) {
+    console.log(`Error caught: ${error}`);
+  }
+  console.log(temporaryArray);
+  const commonString = "https://pokeapi.co/api/v2/pokemon/";
+  temporaryArray = temporaryArray.filter(
+    (pokemon) =>
+      pokemon.name.includes(searchString) ||
+      pokemon.url.substring(commonString.length, pokemon.url.length - 1) ==
+        searchString
+  );
+
+  if (temporaryArray.length <= 20) {
+    setTotalNumberOfPages(1);
+  } else {
+    setTotalNumberOfPages(Math.ceil(temporaryArray.length / 20));
+  }
+  setPokemons(temporaryArray);
+}

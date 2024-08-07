@@ -2,12 +2,10 @@ import React from "react";
 import { handleSort } from "../utils/data";
 
 export default function Sort({
-  sortOption,
   pokemons,
   setSortOption,
   setPokemons,
 }: {
-  sortOption: string;
   pokemons: Pokemons[];
   setSortOption: React.Dispatch<React.SetStateAction<string>>;
   setPokemons: React.Dispatch<React.SetStateAction<Pokemons[]>>;

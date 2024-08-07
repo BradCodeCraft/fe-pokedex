@@ -31,14 +31,16 @@ export default function MainPage() {
         <Image src={Pokedex} alt="Pokemon Logo" />
         {/* Search + Sort + Filters */}
         <div className="min-w-full h-40 my-5">
-          <SearchBar />
+          <SearchBar
+            setTotalNumberOfPages={setTotalNumberOfPages}
+            setPokemons={setPokemons}
+          />
 
           <div className="mt-5 flex flex-col">
             <div className="w-full flex justify-between">
               {/* Sort */}
               <Sort
                 pokemons={pokemons}
-                sortOption={sortOption}
                 setPokemons={setPokemons}
                 setSortOption={setSortOption}
               />

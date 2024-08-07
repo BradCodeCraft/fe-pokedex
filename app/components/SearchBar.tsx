@@ -2,13 +2,16 @@
 
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { handleSearch } from "../utils/data";
 
-export default function SearchBar() {
+export default function SearchBar({
+  setTotalNumberOfPages,
+  setPokemons,
+}: {
+  setTotalNumberOfPages: React.Dispatch<React.SetStateAction<number>>;
+  setPokemons: React.Dispatch<React.SetStateAction<Pokemons[]>>;
+}) {
   const [input, setInput] = useState<string>("");
-
-  function handleSearch() {
-    console.log(input);
-  }
 
   return (
     <>
@@ -25,7 +28,9 @@ export default function SearchBar() {
 
         <button
           className="bg-yellow-400 text-blue-700 px-10 rounded-md p-1 font-bold "
-          onClick={handleSearch}
+          onClick={() =>
+            handleSearch(input, setTotalNumberOfPages, setPokemons)
+          }
         >
           Search
         </button>
